@@ -1,0 +1,12 @@
+Author: %%authorName%%
+Website: %%authorWebsite%%
+Email: xxxauthorEmailxxx
+
+These settings were created %%now-ymd%%
+
+The date can also be added like:
+    - %%now-datetime%%
+    - %%now-date%%
+    - %%now-ymdhms%%
+    - %%now-hms%%
+
