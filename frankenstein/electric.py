@@ -291,7 +291,7 @@ class electric():
                     try:
                         self.log.debug("attempting to rename file %s to %s" %
                                        (i, newPath))
-                        os.rename(i, newPath)
+                        shutil.move(i, newPath)
                     except Exception, e:
                         self.log.error(
                             "could not rename file %s to %s - failed with this error: %s " % (i, newPath, str(e),))
@@ -315,7 +315,7 @@ class electric():
                 try:
                     self.log.debug("attempting to rename file %s to %s" %
                                    (i, newPath))
-                    os.rename(i, newPath)
+                    shutil.move(i, newPath)
                 except Exception, e:
                     self.log.error(
                         "could not rename file %s to %s - failed with this error: %s " % (i, newPath, str(e),))
@@ -395,7 +395,7 @@ class electric():
                     if ignoreExisting == False or (ignoreExisting == True and fileExists == False):
                         self.log.debug("attempting to rename file %s to %s" %
                                        (s, f))
-                        os.rename(s, f)
+                        shutil.move(s, f)
                     else:
                         pass
                 except Exception, e:
