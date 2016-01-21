@@ -1,4 +1,4 @@
-#!/usr/local/bin/python
+# !/usr/local/bin/python
 # encoding: utf-8
 """
 electric.py
@@ -45,6 +45,7 @@ class electric():
         - ``settings`` -- the settings dictionary
         - ``pathToTemplate`` -- path to the template folder/file
         - ``pathToDestination`` -- path to where template should be cloned
+        - ``ignoreExisting`` - - ignore existing files in the destination for the template
     """
     # Initialisation
 
@@ -54,12 +55,14 @@ class electric():
             pathToTemplate,
             pathToDestination,
             settings=False,
+            ignoreExisting=False
     ):
         self.log = log
         log.debug("instansiating a new 'electric' object")
         self.settings = settings
         self.pathToTemplate = pathToTemplate
         self.pathToDestination = pathToDestination
+        self.ignoreExisting = ignoreExisting
         # xt-self-arg-tmpx
 
         return None
@@ -77,7 +80,7 @@ class electric():
         self._fill_placeholders_from_settings()
         self._request_remaining_placeholders()
         self._populate_placeholders_in_files()
-        self._move_template_to_destination()
+        self._move_template_to_destination(ignoreExisting=self.ignoreExisting)
 
         self.log.info('completed the ``get`` method')
         return None
@@ -146,6 +149,8 @@ class electric():
         for i in self.directoryContents:
             contentString += u"%(i)s\n" % locals()
             if os.path.isfile(os.path.join(i)):
+                if i[-4:] in [".png", ".jpg", ".gif"]:
+                    continue
                 readFile = codecs.open(i, encoding='utf-8', mode='r')
                 if ".DS_Store" in i:
                     continue
@@ -207,6 +212,14 @@ class electric():
         self.log.info(
             'starting the ``_request_remaining_placeholders`` method')
 
+        phNeeded = False
+        for k, v in self.phDict.iteritems():
+            if not v:
+                phNeeded = True
+
+        if phNeeded == False:
+            return
+
         print "please add your placeholder values ..."
 
         for k, v in self.phDict.iteritems():
@@ -238,6 +251,8 @@ class electric():
                 try:
                     self.log.debug(
                         "attempting to open the file %s" % (pathToReadFile,))
+                    if i[-4:] in [".png", ".jpg", ".gif"]:
+                        continue
                     readFile = codecs.open(
                         pathToReadFile, encoding='utf-8', mode='r')
                     thisData = readFile.read()
@@ -264,11 +279,12 @@ class electric():
         for i in self.directoryContents:
             if os.path.isfile(i):
                 newPath = i
+                newFile = i.split("/")[-1]
                 for k, v in self.phDict.iteritems():
                     for ph in phs:
                         fullPH = ph + k + ph
-                        if fullPH in i.split("/")[-1]:
-                            newFile = i.split("/")[-1].replace(fullPH, v)
+                        if fullPH in newFile:
+                            newFile = newFile.replace(fullPH, v)
                             newPath = "/".join(i.split("/")
                                                [:-1]) + "/" + newFile
                 if newPath != i:
@@ -288,11 +304,12 @@ class electric():
                 theseDirs.append(i)
         for i in theseDirs:
             newPath = i
+            newFolder = i.split("/")[-1]
             for k, v in self.phDict.iteritems():
                 for ph in phs:
                     fullPH = ph + k + ph
-                    if fullPH in i.split("/")[-1]:
-                        newFolder = i.split("/")[-1].replace(fullPH, v)
+                    if fullPH in newFolder:
+                        newFolder = newFolder.replace(fullPH, v)
                         newPath = "/".join(i.split("/")[:-1]) + "/" + newFolder
             if newPath != i:
                 try:
@@ -310,7 +327,8 @@ class electric():
 
     # use the tab-trigger below for new method
     def _move_template_to_destination(
-            self):
+            self,
+            ignoreExisting=False):
         """ move template to destination
 
         **Key Arguments:**
@@ -360,7 +378,10 @@ class electric():
                 fileExists = True
             except IOError:
                 fileExists = False
-            if fileExists == True and len(content) > 1:
+            if fileExists == True and len(content) > 1 and ignoreExisting == False:
+                readFile = codecs.open(s, encoding='utf-8', mode='r')
+                content = readFile.read()
+                readFile.close()
                 appendText += """
 ## `%(f)s`
 
@@ -371,9 +392,12 @@ class electric():
 """ % locals()
             else:
                 try:
-                    self.log.debug("attempting to rename file %s to %s" %
-                                   (s, f))
-                    os.rename(s, f)
+                    if ignoreExisting == False or (ignoreExisting == True and fileExists == False):
+                        self.log.debug("attempting to rename file %s to %s" %
+                                       (s, f))
+                        os.rename(s, f)
+                    else:
+                        pass
                 except Exception, e:
                     self.log.error("could not rename file %s to %s - failed with this error: %s " %
                                    (s, f, str(e),))
