@@ -1,22 +1,13 @@
 # !/usr/local/bin/python
 # encoding: utf-8
 """
-electric.py
-===========
-:Summary:
-    The code for the frankenstein package
+*The code for the frankenstein package*
 
 :Author:
     David Young
 
 :Date Created:
     May 21, 2015
-
-:dryx syntax:
-    - ``_someObject`` = a 'private' object that should only be changed for debugging
-
-:Notes:
-    - If you have any questions requiring this script/module please email me: d.r.young@qub.ac.uk
 """
 ################# GLOBAL IMPORTS ####################
 import sys
@@ -30,15 +21,14 @@ import codecs
 import re
 from subprocess import Popen, PIPE, STDOUT
 from docopt import docopt
-from dryxPython import logs as dl
-from dryxPython import commonutils as dcu
-from dryxPython.projectsetup import setup_main_clutil
+from fundamentals import tools, times
+import dryxPython.commonutils as dcu
 
 
 class electric():
 
     """
-    The worker class for the electric module
+    *The worker class for the electric module*
 
     **Key Arguments:**
         - ``log`` -- logger
@@ -69,7 +59,8 @@ class electric():
 
     # Method Attributes
     def get(self):
-        """do the frankenstein magic!
+        """
+        *do the frankenstein magic!*
         """
         self.log.info('starting the ``get`` method')
 
@@ -87,7 +78,8 @@ class electric():
 
     def _copy_folder_and_get_directory_listings(
             self):
-        """ copy template folder to /tmp and get directory listings
+        """
+        *copy template folder to /tmp and get directory listings*
         """
         self.log.info(
             'starting the ``_copy_folder_and_get_directory_listings`` method')
@@ -116,7 +108,8 @@ class electric():
 
     def _collect_placeholders_required(
             self):
-        """ collect placeholders required from filename etc
+        """
+        *collect placeholders required from filename etc*
         """
         self.log.info('starting the ``_collect_placeholders_required`` method')
 
@@ -124,7 +117,7 @@ class electric():
         phsString = "|".join(phs)
 
         matchObject = re.finditer(
-            r'(%(phsString)s)(.*?)\1' % locals(),
+            r'(%(phsString)s)([^\s]*?)\1' % locals(),
             string=self.contentString,
             flags=re.S  # re.S
         )
@@ -141,7 +134,8 @@ class electric():
 
     def _join_all_filenames_and_text(
             self):
-        """ join all file names, driectory names and text content together
+        """
+        *join all file names, driectory names and text content together*
         """
         self.log.info('starting the ``_join_all_filenames_and_text`` method')
 
@@ -151,7 +145,7 @@ class electric():
             if os.path.isfile(os.path.join(i)):
                 if i[-4:] in [".png", ".jpg", ".gif"]:
                     continue
-                readFile = codecs.open(i, encoding='utf-8', mode='r')
+                readFile = codecs.open(i, encoding='ISO-8859-1', mode='r')
                 if ".DS_Store" in i:
                     continue
                 data = readFile.read()
@@ -165,7 +159,8 @@ class electric():
 
     def _populate_dynamic_placeholders(
             self):
-        """ populate dynamic placeholders - times etc
+        """
+        *populate dynamic placeholders - times etc*
         """
         self.log.info('starting the ``_populate_dynamic_placeholders`` method')
 
@@ -191,7 +186,8 @@ class electric():
 
     def _fill_placeholders_from_settings(
             self):
-        """ fill placeholders from the placeholders in the settings file
+        """
+        *fill placeholders from the placeholders in the settings file*
         """
         self.log.info(
             'starting the ``_fill_placeholders_from_settings`` method')
@@ -207,7 +203,8 @@ class electric():
 
     def _request_remaining_placeholders(
             self):
-        """ request remaining placeholders needing populated from the user
+        """
+        *request remaining placeholders needing populated from the user*
         """
         self.log.info(
             'starting the ``_request_remaining_placeholders`` method')
@@ -233,7 +230,8 @@ class electric():
 
     def _populate_placeholders_in_files(
             self):
-        """ populate placeholders in file names, folder names and content
+        """
+        *populate placeholders in file names, folder names and content*
         """
         self.log.info(
             'starting the ``_populate_placeholders_in_files`` method')
@@ -254,7 +252,7 @@ class electric():
                     if i[-4:] in [".png", ".jpg", ".gif"]:
                         continue
                     readFile = codecs.open(
-                        pathToReadFile, encoding='utf-8', mode='r')
+                        pathToReadFile, encoding='ISO-8859-1', mode='r')
                     thisData = readFile.read()
                     readFile.close()
                 except IOError, e:
@@ -271,7 +269,7 @@ class electric():
 
                 if newContent != thisData:
                     writeFile = codecs.open(
-                        pathToReadFile, encoding='utf-8', mode='w')
+                        pathToReadFile, encoding='ISO-8859-1', mode='w')
                     writeFile.write(newContent)
                     writeFile.close()
 
@@ -329,7 +327,8 @@ class electric():
     def _move_template_to_destination(
             self,
             ignoreExisting=False):
-        """ move template to destination
+        """
+        *move template to destination*
 
         **Key Arguments:**
             # -
@@ -337,7 +336,8 @@ class electric():
         **Return:**
             - None
 
-        **Todo**
+        .. todo::
+
             - @review: when complete, clean _move_template_to_destination method
             - @review: when complete add logging
         """
@@ -372,14 +372,14 @@ class electric():
         appendText = ""
         for s, f in zip(sourceFiles, destinationFiles):
             try:
-                readFile = codecs.open(f, encoding='utf-8', mode='r')
+                readFile = codecs.open(f, encoding='ISO-8859-1', mode='r')
                 content = readFile.read()
                 readFile.close()
                 fileExists = True
             except IOError:
                 fileExists = False
             if fileExists == True and len(content) > 1 and ignoreExisting == False:
-                readFile = codecs.open(s, encoding='utf-8', mode='r')
+                readFile = codecs.open(s, encoding='ISO-8859-1', mode='r')
                 content = readFile.read()
                 readFile.close()
                 appendText += """
@@ -411,7 +411,7 @@ class electric():
 %(appendText)s
 """ % locals()
             writeFile = codecs.open(
-                "/tmp/append.md", encoding='utf-8', mode='w')
+                "/tmp/append.md", encoding='ISO-8859-1', mode='w')
             writeFile.write(appendText)
             writeFile.close()
             try:

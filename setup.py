@@ -21,6 +21,7 @@ setup(name='frankenstein',
       author_email='davidrobertyoung@gmail.com',
       license='MIT',
       packages=['frankenstein'],
+      include_package_data=True,
       install_requires=[
           'pyyaml'
       ],
