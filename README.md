@@ -6,7 +6,7 @@ The default placeholders are `%%` and `xxx`.
 
 ### Dyanamic Placeholders
 
-Some placeholders are dynamic and will be pre-populated for you. There include:
+Some placeholders are dynamic and will be pre-populated for you. These include:
 
 * `now-ymd`: e.g. 20151001
 * `now-hms`: e.g. 093103
@@ -14,4 +14,5 @@ Some placeholders are dynamic and will be pre-populated for you. There include:
 * `now-date`: e.g. October 1, 2015
 * `now-time` e.g 9:31 am
 * `now-datetime` e.g October 1, 2015 9:31 am
+* `now-year` e.g 2015
 
