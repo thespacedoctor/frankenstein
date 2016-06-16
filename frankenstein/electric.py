@@ -174,6 +174,7 @@ class electric():
             "now-datetime": now.strftime("%B %e, %Y %I:%M ") + now.strftime("%p").lower(),
             "now-time": now.strftime("%I:%M ") + now.strftime("%p").lower(),
             "now-hms": now.strftime("%H%M%S"),
+            "now-year": now.strftime("%Y")
         }
 
         for k, v in self.phDict.iteritems():
