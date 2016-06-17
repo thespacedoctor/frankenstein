@@ -1,7 +1,11 @@
 # -*- coding: utf-8 -*-
 #
 # frankenstein documentation build configuration file, created by
+<<<<<<< HEAD
 # sphinx-quickstart on Fri Jun 17 12:32:35 2016.
+=======
+# sphinx-quickstart on Fri Jun 17 12:12:49 2016.
+>>>>>>> develop
 #
 # This file is execfile()d with the current directory set to its
 # containing dir.

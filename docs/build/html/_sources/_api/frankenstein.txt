@@ -12,6 +12,10 @@ Subpackages
 .. toctree::
 
     frankenstein.commonutils
+<<<<<<< HEAD
+=======
+    frankenstein.tests
+>>>>>>> develop
 
 Submodules
 ----------
