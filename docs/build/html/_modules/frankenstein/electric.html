@@ -1,0 +1,646 @@
+
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>frankenstein.electric &mdash; frankenstein 0.1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../../_static/dryx.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="frankenstein 0.1 documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> frankenstein
+          
+
+          
+            
+            <img src="../../_static/thespacedoctor_icon_white_circle.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <p class="caption"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../_includes/index.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../_includes/index.html#usage">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../_includes/index.html#documentation">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../_includes/index.html#tutorial">Tutorial</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../autosummary.html">Subpackages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../autosummary.html#modules">Modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../autosummary.html#classes">Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../autosummary.html#functions">Functions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">frankenstein</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      
+    <li>frankenstein.electric</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for frankenstein.electric</h1><div class="highlight"><pre>
+<span></span><span class="c1"># !/usr/local/bin/python</span>
+<span class="c1"># encoding: utf-8</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">*The code for the frankenstein package*</span>
+
+<span class="sd">:Author:</span>
+<span class="sd">    David Young</span>
+
+<span class="sd">:Date Created:</span>
+<span class="sd">    May 21, 2015</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="c1">################# GLOBAL IMPORTS ####################</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;TERM&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;vt100&#39;</span>
+<span class="kn">import</span> <span class="nn">readline</span>
+<span class="kn">import</span> <span class="nn">glob</span>
+<span class="kn">import</span> <span class="nn">pickle</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">import</span> <span class="nn">codecs</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">subprocess</span> <span class="kn">import</span> <span class="n">Popen</span><span class="p">,</span> <span class="n">PIPE</span><span class="p">,</span> <span class="n">STDOUT</span>
+<span class="kn">from</span> <span class="nn">docopt</span> <span class="kn">import</span> <span class="n">docopt</span>
+<span class="kn">from</span> <span class="nn">fundamentals</span> <span class="kn">import</span> <span class="n">tools</span><span class="p">,</span> <span class="n">times</span>
+<span class="kn">import</span> <span class="nn">dryxPython.commonutils</span> <span class="kn">as</span> <span class="nn">dcu</span>
+
+
+<div class="viewcode-block" id="electric"><a class="viewcode-back" href="../../_autosummary/frankenstein.electric.html#frankenstein.electric.electric">[docs]</a><span class="k">class</span> <span class="nc">electric</span><span class="p">():</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    *The worker class for the electric module*</span>
+
+<span class="sd">    **Key Arguments:**</span>
+<span class="sd">        - ``log`` -- logger</span>
+<span class="sd">        - ``settings`` -- the settings dictionary</span>
+<span class="sd">        - ``pathToTemplate`` -- path to the template folder/file</span>
+<span class="sd">        - ``pathToDestination`` -- path to where template should be cloned</span>
+<span class="sd">        - ``ignoreExisting`` - - ignore existing files in the destination for the template</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Initialisation</span>
+
+<div class="viewcode-block" id="electric.__init__"><a class="viewcode-back" href="../../_autosummary/frankenstein.electric.html#frankenstein.electric.electric.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">log</span><span class="p">,</span>
+            <span class="n">pathToTemplate</span><span class="p">,</span>
+            <span class="n">pathToDestination</span><span class="p">,</span>
+            <span class="n">settings</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+            <span class="n">ignoreExisting</span><span class="o">=</span><span class="bp">False</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span> <span class="o">=</span> <span class="n">log</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;instansiating a new &#39;electric&#39; object&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">settings</span> <span class="o">=</span> <span class="n">settings</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pathToTemplate</span> <span class="o">=</span> <span class="n">pathToTemplate</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pathToDestination</span> <span class="o">=</span> <span class="n">pathToDestination</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ignoreExisting</span> <span class="o">=</span> <span class="n">ignoreExisting</span>
+        <span class="c1"># xt-self-arg-tmpx</span>
+
+        <span class="k">return</span> <span class="bp">None</span></div>
+
+    <span class="c1"># Method Attributes</span>
+<div class="viewcode-block" id="electric.get"><a class="viewcode-back" href="../../_api/frankenstein.electric.html#frankenstein.electric.electric.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        *do the frankenstein magic!*</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;starting the ``get`` method&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_copy_folder_and_get_directory_listings</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_join_all_filenames_and_text</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_collect_placeholders_required</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_populate_dynamic_placeholders</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_fill_placeholders_from_settings</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_request_remaining_placeholders</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_populate_placeholders_in_files</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_move_template_to_destination</span><span class="p">(</span><span class="n">ignoreExisting</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ignoreExisting</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;completed the ``get`` method&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">None</span></div>
+
+    <span class="k">def</span> <span class="nf">_copy_folder_and_get_directory_listings</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        *copy template folder to /tmp and get directory listings*</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="s1">&#39;starting the ``_copy_folder_and_get_directory_listings`` method&#39;</span><span class="p">)</span>
+
+        <span class="c1"># COPY TEMPLATE STRUCTURE TO /tmp/</span>
+        <span class="n">basename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pathToTemplate</span><span class="p">)</span>
+        <span class="n">tmpPath</span> <span class="o">=</span> <span class="s2">&quot;/tmp/</span><span class="si">%(basename)s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">locals</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">tmpPath</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="n">shutil</span><span class="o">.</span><span class="n">copytree</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pathToTemplate</span><span class="p">,</span> <span class="n">tmpPath</span><span class="p">)</span>
+
+        <span class="n">directoryContents</span> <span class="o">=</span> <span class="n">dcu</span><span class="o">.</span><span class="n">get_recursive_list_of_directory_contents</span><span class="p">(</span>
+            <span class="n">log</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">,</span>
+            <span class="n">baseFolderPath</span><span class="o">=</span><span class="n">tmpPath</span><span class="p">,</span>
+            <span class="n">whatToList</span><span class="o">=</span><span class="s1">&#39;all&#39;</span>  <span class="c1"># [ &#39;files&#39; | &#39;dirs&#39; | &#39;all&#39; ]</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">directoryContents</span> <span class="o">=</span> <span class="n">directoryContents</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tmpPath</span> <span class="o">=</span> <span class="n">tmpPath</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="s1">&#39;completed the ``_copy_folder_and_get_directory_listings`` method&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">None</span>
+
+    <span class="k">def</span> <span class="nf">_collect_placeholders_required</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        *collect placeholders required from filename etc*</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;starting the ``_collect_placeholders_required`` method&#39;</span><span class="p">)</span>
+
+        <span class="n">phs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="p">[</span><span class="s2">&quot;frankenstein&quot;</span><span class="p">][</span><span class="s2">&quot;placeholder delimiters&quot;</span><span class="p">]</span>
+        <span class="n">phsString</span> <span class="o">=</span> <span class="s2">&quot;|&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">phs</span><span class="p">)</span>
+
+        <span class="n">matchObject</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">finditer</span><span class="p">(</span>
+            <span class="s1">r&#39;(</span><span class="si">%(phsString)s</span><span class="s1">)([^\s]*?)\1&#39;</span> <span class="o">%</span> <span class="nb">locals</span><span class="p">(),</span>
+            <span class="n">string</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">contentString</span><span class="p">,</span>
+            <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">S</span>  <span class="c1"># re.S</span>
+        <span class="p">)</span>
+
+        <span class="n">phDict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">match</span> <span class="ow">in</span> <span class="n">matchObject</span><span class="p">:</span>
+            <span class="n">phDict</span><span class="p">[</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">2</span><span class="p">)]</span> <span class="o">=</span> <span class="bp">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">phDict</span> <span class="o">=</span> <span class="n">phDict</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="s1">&#39;completed the ``_collect_placeholders_required`` method&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">None</span>
+
+    <span class="k">def</span> <span class="nf">_join_all_filenames_and_text</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        *join all file names, driectory names and text content together*</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;starting the ``_join_all_filenames_and_text`` method&#39;</span><span class="p">)</span>
+
+        <span class="n">contentString</span> <span class="o">=</span> <span class="s2">u&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">directoryContents</span><span class="p">:</span>
+            <span class="n">contentString</span> <span class="o">+=</span> <span class="s2">u&quot;</span><span class="si">%(i)s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">locals</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">i</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="n">i</span><span class="p">[</span><span class="o">-</span><span class="mi">4</span><span class="p">:]</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;.png&quot;</span><span class="p">,</span> <span class="s2">&quot;.jpg&quot;</span><span class="p">,</span> <span class="s2">&quot;.gif&quot;</span><span class="p">]:</span>
+                    <span class="k">continue</span>
+                <span class="n">readFile</span> <span class="o">=</span> <span class="n">codecs</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;ISO-8859-1&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="s2">&quot;.DS_Store&quot;</span> <span class="ow">in</span> <span class="n">i</span><span class="p">:</span>
+                    <span class="k">continue</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">readFile</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+                <span class="n">contentString</span> <span class="o">+=</span> <span class="s2">u&quot;</span><span class="si">%(data)s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">locals</span><span class="p">()</span>
+                <span class="n">readFile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">contentString</span> <span class="o">=</span> <span class="n">contentString</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;completed the ``_join_all_filenames_and_text`` method&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">None</span>
+
+    <span class="k">def</span> <span class="nf">_populate_dynamic_placeholders</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        *populate dynamic placeholders - times etc*</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;starting the ``_populate_dynamic_placeholders`` method&#39;</span><span class="p">)</span>
+
+        <span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">date</span><span class="p">,</span> <span class="n">time</span>
+        <span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+
+        <span class="n">dynamicPhs</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;now-ymd&quot;</span><span class="p">:</span> <span class="n">now</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y%m</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">),</span>
+            <span class="s2">&quot;now-ymdhms&quot;</span><span class="p">:</span> <span class="n">now</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y%m</span><span class="si">%d</span><span class="s2">t%H%M%S&quot;</span><span class="p">),</span>
+            <span class="s2">&quot;now-date&quot;</span><span class="p">:</span> <span class="n">now</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%B </span><span class="si">%e</span><span class="s2">, %Y&quot;</span><span class="p">),</span>
+            <span class="s2">&quot;now-datetime&quot;</span><span class="p">:</span> <span class="n">now</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%B </span><span class="si">%e</span><span class="s2">, %Y %I:%M &quot;</span><span class="p">)</span> <span class="o">+</span> <span class="n">now</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%p&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span>
+            <span class="s2">&quot;now-time&quot;</span><span class="p">:</span> <span class="n">now</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%I:%M &quot;</span><span class="p">)</span> <span class="o">+</span> <span class="n">now</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%p&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span>
+            <span class="s2">&quot;now-hms&quot;</span><span class="p">:</span> <span class="n">now</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%H%M%S&quot;</span><span class="p">),</span>
+            <span class="s2">&quot;now-year&quot;</span><span class="p">:</span> <span class="n">now</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y&quot;</span><span class="p">)</span>
+        <span class="p">}</span>
+
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">phDict</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">dynamicPhs</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">phDict</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">dynamicPhs</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="s1">&#39;completed the ``_populate_dynamic_placeholders`` method&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">None</span>
+
+    <span class="k">def</span> <span class="nf">_fill_placeholders_from_settings</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        *fill placeholders from the placeholders in the settings file*</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="s1">&#39;starting the ``_fill_placeholders_from_settings`` method&#39;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">phDict</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="p">[</span><span class="s2">&quot;frankenstein&quot;</span><span class="p">][</span><span class="s2">&quot;fixed placeholders&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">phDict</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="p">[</span>
+                    <span class="s2">&quot;frankenstein&quot;</span><span class="p">][</span><span class="s2">&quot;fixed placeholders&quot;</span><span class="p">][</span><span class="n">k</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="s1">&#39;completed the ``_fill_placeholders_from_settings`` method&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">None</span>
+
+    <span class="k">def</span> <span class="nf">_request_remaining_placeholders</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        *request remaining placeholders needing populated from the user*</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="s1">&#39;starting the ``_request_remaining_placeholders`` method&#39;</span><span class="p">)</span>
+
+        <span class="n">phNeeded</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">phDict</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">v</span><span class="p">:</span>
+                <span class="n">phNeeded</span> <span class="o">=</span> <span class="bp">True</span>
+
+        <span class="k">if</span> <span class="n">phNeeded</span> <span class="o">==</span> <span class="bp">False</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="k">print</span> <span class="s2">&quot;please add your placeholder values ...&quot;</span>
+
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">phDict</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">v</span><span class="p">:</span>
+                <span class="n">v</span> <span class="o">=</span> <span class="nb">raw_input</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%(k)s</span><span class="s2">? </span><span class="se">\n</span><span class="s2">  &gt;  &quot;</span> <span class="o">%</span> <span class="nb">locals</span><span class="p">())</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">phDict</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="s1">&#39;completed the ``_request_remaining_placeholders`` method&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">None</span>
+
+    <span class="k">def</span> <span class="nf">_populate_placeholders_in_files</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        *populate placeholders in file names, folder names and content*</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="s1">&#39;starting the ``_populate_placeholders_in_files`` method&#39;</span><span class="p">)</span>
+
+        <span class="n">rev</span> <span class="o">=</span> <span class="nb">reversed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">directoryContents</span><span class="p">)</span>
+        <span class="n">phs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="p">[</span><span class="s2">&quot;frankenstein&quot;</span><span class="p">][</span><span class="s2">&quot;placeholder delimiters&quot;</span><span class="p">]</span>
+
+        <span class="c1"># FILE CONTENT FIRST</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">directoryContents</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+                <span class="n">pathToReadFile</span> <span class="o">=</span> <span class="n">i</span>
+                <span class="k">if</span> <span class="s2">&quot;.DS_Store&quot;</span> <span class="ow">in</span> <span class="n">i</span><span class="p">:</span>
+                    <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+                    <span class="k">continue</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                        <span class="s2">&quot;attempting to open the file </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">pathToReadFile</span><span class="p">,))</span>
+                    <span class="k">if</span> <span class="n">i</span><span class="p">[</span><span class="o">-</span><span class="mi">4</span><span class="p">:]</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;.png&quot;</span><span class="p">,</span> <span class="s2">&quot;.jpg&quot;</span><span class="p">,</span> <span class="s2">&quot;.gif&quot;</span><span class="p">]:</span>
+                        <span class="k">continue</span>
+                    <span class="n">readFile</span> <span class="o">=</span> <span class="n">codecs</span><span class="o">.</span><span class="n">open</span><span class="p">(</span>
+                        <span class="n">pathToReadFile</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;ISO-8859-1&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+                    <span class="n">thisData</span> <span class="o">=</span> <span class="n">readFile</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+                    <span class="n">readFile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+                <span class="k">except</span> <span class="ne">IOError</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="n">message</span> <span class="o">=</span> <span class="s1">&#39;could not open the file </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">pathToReadFile</span><span class="p">,)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+                    <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+                <span class="n">newContent</span> <span class="o">=</span> <span class="n">thisData</span>
+                <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">phDict</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+                    <span class="k">for</span> <span class="n">ph</span> <span class="ow">in</span> <span class="n">phs</span><span class="p">:</span>
+                        <span class="n">fullPH</span> <span class="o">=</span> <span class="n">ph</span> <span class="o">+</span> <span class="n">k</span> <span class="o">+</span> <span class="n">ph</span>
+                        <span class="k">if</span> <span class="n">fullPH</span> <span class="ow">in</span> <span class="n">thisData</span><span class="p">:</span>
+                            <span class="n">newContent</span> <span class="o">=</span> <span class="n">newContent</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">fullPH</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">newContent</span> <span class="o">!=</span> <span class="n">thisData</span><span class="p">:</span>
+                    <span class="n">writeFile</span> <span class="o">=</span> <span class="n">codecs</span><span class="o">.</span><span class="n">open</span><span class="p">(</span>
+                        <span class="n">pathToReadFile</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;ISO-8859-1&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+                    <span class="n">writeFile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">newContent</span><span class="p">)</span>
+                    <span class="n">writeFile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+        <span class="c1"># NOW FILE NAMES</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">directoryContents</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+                <span class="n">newPath</span> <span class="o">=</span> <span class="n">i</span>
+                <span class="n">newFile</span> <span class="o">=</span> <span class="n">i</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">phDict</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+                    <span class="k">for</span> <span class="n">ph</span> <span class="ow">in</span> <span class="n">phs</span><span class="p">:</span>
+                        <span class="n">fullPH</span> <span class="o">=</span> <span class="n">ph</span> <span class="o">+</span> <span class="n">k</span> <span class="o">+</span> <span class="n">ph</span>
+                        <span class="k">if</span> <span class="n">fullPH</span> <span class="ow">in</span> <span class="n">newFile</span><span class="p">:</span>
+                            <span class="n">newFile</span> <span class="o">=</span> <span class="n">newFile</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">fullPH</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+                            <span class="n">newPath</span> <span class="o">=</span> <span class="s2">&quot;/&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+                                               <span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">newFile</span>
+                <span class="k">if</span> <span class="n">newPath</span> <span class="o">!=</span> <span class="n">i</span><span class="p">:</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;attempting to rename file </span><span class="si">%s</span><span class="s2"> to </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span>
+                                       <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">newPath</span><span class="p">))</span>
+                        <span class="n">shutil</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">newPath</span><span class="p">)</span>
+                    <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                            <span class="s2">&quot;could not rename file </span><span class="si">%s</span><span class="s2"> to </span><span class="si">%s</span><span class="s2"> - failed with this error: </span><span class="si">%s</span><span class="s2"> &quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">newPath</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">),))</span>
+                        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="c1"># NOW DRIECTORY NAMES</span>
+        <span class="n">theseDirs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">directoryContents</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+                <span class="n">theseDirs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">theseDirs</span><span class="p">:</span>
+            <span class="n">newPath</span> <span class="o">=</span> <span class="n">i</span>
+            <span class="n">newFolder</span> <span class="o">=</span> <span class="n">i</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">phDict</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+                <span class="k">for</span> <span class="n">ph</span> <span class="ow">in</span> <span class="n">phs</span><span class="p">:</span>
+                    <span class="n">fullPH</span> <span class="o">=</span> <span class="n">ph</span> <span class="o">+</span> <span class="n">k</span> <span class="o">+</span> <span class="n">ph</span>
+                    <span class="k">if</span> <span class="n">fullPH</span> <span class="ow">in</span> <span class="n">newFolder</span><span class="p">:</span>
+                        <span class="n">newFolder</span> <span class="o">=</span> <span class="n">newFolder</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">fullPH</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+                        <span class="n">newPath</span> <span class="o">=</span> <span class="s2">&quot;/&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">newFolder</span>
+            <span class="k">if</span> <span class="n">newPath</span> <span class="o">!=</span> <span class="n">i</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;attempting to rename file </span><span class="si">%s</span><span class="s2"> to </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span>
+                                   <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">newPath</span><span class="p">))</span>
+                    <span class="n">shutil</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">newPath</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                        <span class="s2">&quot;could not rename file </span><span class="si">%s</span><span class="s2"> to </span><span class="si">%s</span><span class="s2"> - failed with this error: </span><span class="si">%s</span><span class="s2"> &quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">newPath</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">),))</span>
+                    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="s1">&#39;completed the ``_populate_placeholders_in_files`` method&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">None</span>
+
+    <span class="c1"># use the tab-trigger below for new method</span>
+    <span class="k">def</span> <span class="nf">_move_template_to_destination</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">ignoreExisting</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        *move template to destination*</span>
+
+<span class="sd">        **Key Arguments:**</span>
+<span class="sd">            # -</span>
+
+<span class="sd">        **Return:**</span>
+<span class="sd">            - None</span>
+
+<span class="sd">        .. todo::</span>
+
+<span class="sd">            - @review: when complete, clean _move_template_to_destination method</span>
+<span class="sd">            - @review: when complete add logging</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;starting the ``_move_template_to_destination`` method&#39;</span><span class="p">)</span>
+
+        <span class="c1"># CREATE DIRECTORY STRUCTURE</span>
+        <span class="n">sourceDirectories</span> <span class="o">=</span> <span class="n">dcu</span><span class="o">.</span><span class="n">get_recursive_list_of_directory_contents</span><span class="p">(</span>
+            <span class="n">log</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">,</span>
+            <span class="n">baseFolderPath</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tmpPath</span><span class="p">,</span>
+            <span class="n">whatToList</span><span class="o">=</span><span class="s1">&#39;dirs&#39;</span>  <span class="c1"># [ &#39;files&#39; | &#39;dirs&#39; | &#39;all&#39; ]</span>
+        <span class="p">)</span>
+        <span class="n">destinationDirectories</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">destinationDirectories</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">destinationDirectories</span><span class="p">[:]</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">pathToDestination</span> <span class="o">+</span>
+                                     <span class="n">d</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tmpPath</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">sourceDirectories</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">destinationDirectories</span><span class="p">:</span>
+            <span class="c1"># Recursively create missing directories</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+
+        <span class="c1"># CREATE NEW FILES</span>
+        <span class="n">sourceFiles</span> <span class="o">=</span> <span class="n">dcu</span><span class="o">.</span><span class="n">get_recursive_list_of_directory_contents</span><span class="p">(</span>
+            <span class="n">log</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">,</span>
+            <span class="n">baseFolderPath</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tmpPath</span><span class="p">,</span>
+            <span class="n">whatToList</span><span class="o">=</span><span class="s1">&#39;files&#39;</span>  <span class="c1"># [ &#39;files&#39; | &#39;dirs&#39; | &#39;all&#39; ]</span>
+        <span class="p">)</span>
+        <span class="n">destinationFiles</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">destinationFiles</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">destinationFiles</span><span class="p">[:]</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">pathToDestination</span> <span class="o">+</span>
+                               <span class="n">d</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tmpPath</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">sourceFiles</span><span class="p">]</span>
+
+        <span class="n">appendText</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">f</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">sourceFiles</span><span class="p">,</span> <span class="n">destinationFiles</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">readFile</span> <span class="o">=</span> <span class="n">codecs</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;ISO-8859-1&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+                <span class="n">content</span> <span class="o">=</span> <span class="n">readFile</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+                <span class="n">readFile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+                <span class="n">fileExists</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+                <span class="n">fileExists</span> <span class="o">=</span> <span class="bp">False</span>
+            <span class="k">if</span> <span class="n">fileExists</span> <span class="o">==</span> <span class="bp">True</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">ignoreExisting</span> <span class="o">==</span> <span class="bp">False</span><span class="p">:</span>
+                <span class="n">readFile</span> <span class="o">=</span> <span class="n">codecs</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;ISO-8859-1&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+                <span class="n">content</span> <span class="o">=</span> <span class="n">readFile</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+                <span class="n">readFile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+                <span class="n">appendText</span> <span class="o">+=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">## `</span><span class="si">%(f)s</span><span class="s2">`</span>
+
+<span class="s2">```</span>
+<span class="si">%(content)s</span><span class="s2"> </span>
+<span class="s2">```</span>
+
+<span class="s2">&quot;&quot;&quot;</span> <span class="o">%</span> <span class="nb">locals</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">ignoreExisting</span> <span class="o">==</span> <span class="bp">False</span> <span class="ow">or</span> <span class="p">(</span><span class="n">ignoreExisting</span> <span class="o">==</span> <span class="bp">True</span> <span class="ow">and</span> <span class="n">fileExists</span> <span class="o">==</span> <span class="bp">False</span><span class="p">):</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;attempting to rename file </span><span class="si">%s</span><span class="s2"> to </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span>
+                                       <span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">f</span><span class="p">))</span>
+                        <span class="n">shutil</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="k">pass</span>
+                <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;could not rename file </span><span class="si">%s</span><span class="s2"> to </span><span class="si">%s</span><span class="s2"> - failed with this error: </span><span class="si">%s</span><span class="s2"> &quot;</span> <span class="o">%</span>
+                                   <span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">),))</span>
+                    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="c1"># CREATE NOTE TO USER TO APPEND TEXT</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">appendText</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="n">appendText</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2"># Text to Append to Pre-Existing Files</span>
+
+<span class="si">%(appendText)s</span><span class="s2"></span>
+<span class="s2">&quot;&quot;&quot;</span> <span class="o">%</span> <span class="nb">locals</span><span class="p">()</span>
+            <span class="n">writeFile</span> <span class="o">=</span> <span class="n">codecs</span><span class="o">.</span><span class="n">open</span><span class="p">(</span>
+                <span class="s2">&quot;/tmp/append.md&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;ISO-8859-1&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+            <span class="n">writeFile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">appendText</span><span class="p">)</span>
+            <span class="n">writeFile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">cmd</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;open -a &quot;Marked 2&quot; /tmp/append.md&quot;&quot;&quot;</span> <span class="o">%</span> <span class="nb">locals</span><span class="p">()</span>
+                <span class="n">p</span> <span class="o">=</span> <span class="n">Popen</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">stdin</span><span class="o">=</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+                <span class="n">output</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">communicate</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;output: </span><span class="si">%(output)s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">locals</span><span class="p">())</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="k">pass</span>
+
+        <span class="c1"># REMOVE THE TMP FOLDER</span>
+        <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tmpPath</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;completed the ``_move_template_to_destination`` method&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">None</span></div>
+
+    <span class="c1"># use the tab-trigger below for new method</span>
+    <span class="c1"># xt-class-method</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Dave Young.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
