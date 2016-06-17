@@ -17,8 +17,7 @@
 import sys
 import os
 from docopt import docopt
-from dryxPython import logs as dl
-from dryxPython import commonutils as dcu
+
 
 ###################################################################
 # CLASSES                                                         #

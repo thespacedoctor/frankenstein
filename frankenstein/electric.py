@@ -22,6 +22,7 @@ import re
 from subprocess import Popen, PIPE, STDOUT
 from docopt import docopt
 from fundamentals import tools, times
+from fundamentals.files import recursive_directory_listing
 
 
 class electric():
@@ -92,10 +93,10 @@ class electric():
             pass
         shutil.copytree(self.pathToTemplate, tmpPath)
 
-        directoryContents = dcu.get_recursive_list_of_directory_contents(
+        directoryContents = recursive_directory_listing(
             log=self.log,
             baseFolderPath=tmpPath,
-            whatToList='all'  # [ 'files' | 'dirs' | 'all' ]
+            whatToList="all"  # all | files | dirs
         )
 
         self.directoryContents = directoryContents
@@ -344,11 +345,12 @@ class electric():
         self.log.info('starting the ``_move_template_to_destination`` method')
 
         # CREATE DIRECTORY STRUCTURE
-        sourceDirectories = dcu.get_recursive_list_of_directory_contents(
+        sourceDirectories = recursive_directory_listing(
             log=self.log,
-            baseFolderPath=self.tmpPath,
-            whatToList='dirs'  # [ 'files' | 'dirs' | 'all' ]
+            baseFolderPath="pathToFolder",
+            whatToList="dirs"  # all | files | dirs
         )
+
         destinationDirectories = []
         destinationDirectories = []
         destinationDirectories[:] = [self.pathToDestination +
@@ -359,10 +361,10 @@ class electric():
                 os.makedirs(d)
 
         # CREATE NEW FILES
-        sourceFiles = dcu.get_recursive_list_of_directory_contents(
+        sourceFiles = recursive_directory_listing(
             log=self.log,
-            baseFolderPath=self.tmpPath,
-            whatToList='files'  # [ 'files' | 'dirs' | 'all' ]
+            baseFolderPath="pathToFolder",
+            whatToList="files"  # all | files | dirs
         )
         destinationFiles = []
         destinationFiles = []
