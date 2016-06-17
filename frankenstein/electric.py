@@ -22,7 +22,6 @@ import re
 from subprocess import Popen, PIPE, STDOUT
 from docopt import docopt
 from fundamentals import tools, times
-import dryxPython.commonutils as dcu
 
 
 class electric():
