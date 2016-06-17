@@ -12,7 +12,6 @@ Subpackages
 .. toctree::
 
     frankenstein.commonutils
-    frankenstein.tests
 
 Submodules
 ----------
