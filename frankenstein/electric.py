@@ -347,7 +347,7 @@ class electric():
         # CREATE DIRECTORY STRUCTURE
         sourceDirectories = recursive_directory_listing(
             log=self.log,
-            baseFolderPath="pathToFolder",
+            baseFolderPath=self.tmpPath,
             whatToList="dirs"  # all | files | dirs
         )
 
@@ -363,7 +363,7 @@ class electric():
         # CREATE NEW FILES
         sourceFiles = recursive_directory_listing(
             log=self.log,
-            baseFolderPath="pathToFolder",
+            baseFolderPath=self.tmpPath,
             whatToList="files"  # all | files | dirs
         )
         destinationFiles = []
