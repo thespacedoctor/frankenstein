@@ -34,8 +34,8 @@ setup(name="frankenstein",
           'frankenstein',
           'fundamentals'
       ],
-      test_suite='nose.collector',
-      tests_require=['nose', 'nose-cover3'],
+      test_suite='nose2.collector.collector',
+      tests_require=['nose2', 'cov-core'],
       entry_points={
           'console_scripts': ['frankenstein=frankenstein.cl_utils:main'],
       },

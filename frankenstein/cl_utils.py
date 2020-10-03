@@ -11,7 +11,10 @@
 
 Usage:
     frankenstein <pathToTemplate> <pathToDestination> [-s <pathToSettingsFile>]
+    frankenstein -l <pathToTemplate> [-s <pathToSettingsFile>]
 
+Options:
+    -l, --list            list the remaining placeholders required by the template after dynamic and settings file placeholders
     -h, --help            show this help message
     -s, --settings        the settings file
 """
@@ -28,10 +31,6 @@ from frankenstein import electric
 # from ..__init__ import *
 
 
-def tab_complete(text, state):
-    return (glob.glob(text + '*') + [None])[state]
-
-
 def main(arguments=None):
     """
     *The main function used when ``cl_utils.py`` is run as a single script from the cl, or when installed as a cl command*
@@ -45,11 +44,6 @@ def main(arguments=None):
         projectName="frankenstein"
     )
     arguments, settings, log, dbConn = su.setup()
-
-    # tab completion for raw_input
-    readline.set_completer_delims(' \t\n;')
-    readline.parse_and_bind("tab: complete")
-    readline.set_completer(tab_complete)
 
     # unpack remaining cl arguments using `exec` to setup the variable names
     # automatically
@@ -72,42 +66,24 @@ def main(arguments=None):
         '--- STARTING TO RUN THE cl_utils.py AT %s' %
         (startTime,))
 
-    # set options interactively if user requests
-    if "interactiveFlag" in locals() and interactiveFlag:
-
-        # load previous settings
-        moduleDirectory = os.path.dirname(__file__) + "/resources"
-        pathToPickleFile = "%(moduleDirectory)s/previousSettings.p" % locals()
-        try:
-            with open(pathToPickleFile):
-                pass
-            previousSettingsExist = True
-        except:
-            previousSettingsExist = False
-        previousSettings = {}
-        if previousSettingsExist:
-            previousSettings = pickle.load(open(pathToPickleFile, "rb"))
-
-        # x-raw-input
-        # x-boolean-raw-input
-        # x-raw-input-with-default-value-from-previous-settings
-
-        # save the most recently used requests
-        pickleMeObjects = []
-        pickleMe = {}
-        theseLocals = locals()
-        for k in pickleMeObjects:
-            pickleMe[k] = theseLocals[k]
-        pickle.dump(pickleMe, open(pathToPickleFile, "wb"))
-
     # call the worker function
     # x-if-settings-or-database-credientials
-    electric.electric(
-        log=log,
-        pathToTemplate=pathToTemplate,
-        pathToDestination=pathToDestination,
-        settings=settings
-    ).get()
+    if not listFlag:
+        electric.electric(
+            log=log,
+            pathToTemplate=pathToTemplate,
+            pathToDestination=pathToDestination,
+            settings=settings
+        ).get()
+    if listFlag:
+        placeHolders = electric.electric(
+            log=log,
+            pathToTemplate=pathToTemplate,
+            pathToDestination=pathToDestination,
+            settings=settings
+        ).list_placeholders()
+        placeHolders = ("\n").join(placeHolders)
+        print placeHolders
 
     if "dbConn" in locals() and dbConn:
         dbConn.commit()

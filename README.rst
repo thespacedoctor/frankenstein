@@ -21,7 +21,7 @@ Documentation for frankenstein is hosted by `Read the Docs <http://frankenstein.
 Installation
 ============
 
-The easiest way to install frankenstein us to use ``pip``:
+The easiest way to install frankenstein is to use ``pip``:
 
 .. code:: bash
 
@@ -67,7 +67,7 @@ Please report any issues
 License
 =======
 
-Copyright (c) 2016 David Young
+Copyright (c) 2018 David Young
 
 Permission is hereby granted, free of charge, to any person obtaining a
 copy of this software and associated documentation files (the

@@ -21,7 +21,7 @@ pathToTemplate = pathToInputDir + "/test_template"
 # xnose-class-to-test-main-command-line-function-of-module
 
 
-class test_electric():
+class test_electric(unittest.TestCase):
 
     def test_electric_function(self):
         kwargs = {}
@@ -31,6 +31,15 @@ class test_electric():
         # xt-kwarg_key_and_value
         testObject = electric(**kwargs)
         testObject.get()
+
+    def test_electric_list_function(self):
+        kwargs = {}
+        kwargs["log"] = log
+        kwargs["settings"] = settings
+        kwargs["pathToTemplate"] = pathToTemplate
+        # xt-kwarg_key_and_value
+        testObject = electric(**kwargs)
+        testObject.list()
 
         # x-print-testpage-for-pessto-marshall-web-object
 

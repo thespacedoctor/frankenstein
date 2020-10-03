@@ -1,7 +1,7 @@
 Installation
 ============
 
-The easiest way to install frankenstein us to use ``pip``:
+The easiest way to install frankenstein is to use ``pip``:
 
 .. code:: bash
 
