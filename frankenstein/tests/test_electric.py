@@ -42,7 +42,6 @@ if not os.path.exists(pathToOutputDir):
 pathToTemplate = pathToInputDir + "/test_template"
 pathToDestination = pathToOutputDir
 
-
 class test_electric(unittest.TestCase):
 
     def test_electric_function(self):

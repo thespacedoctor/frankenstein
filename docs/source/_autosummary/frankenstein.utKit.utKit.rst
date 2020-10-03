@@ -1,14 +1,13 @@
-utKit
-===============================================
+﻿utKit *(class)*
+==================================
 
 .. currentmodule:: frankenstein.utKit
 
 .. autoclass:: utKit
    :members:
-   :private-members:
    :show-inheritance:
    :inherited-members:
-   :member-order: bysource
+   :member-order: groupwise
 
     
 
@@ -35,67 +34,67 @@ utKit
             ~utKit.tearDownModule
        
    
-   
-       
-   
-       
-   
-       
-   
-       
-   
-       
-   
-       
-   
-       
-   
-       
-   
-       
-   
-       
-   
-       
-   
-       
-   
-       
-   
-       
-   
-       
-   
-       
-   
-       
-   
-       
-   
-       
-   
-       
-   
-       
-   
-       
-   
-       
-   
-       
-   
-       
-   
-       
-   
-       
-   
-       
-   
-       
-   
-       
-   
+   .. 
+   ..     
+   .. 
+   ..     
+   .. 
+   ..     
+   .. 
+   ..     
+   .. 
+   ..     
+   .. 
+   ..     
+   .. 
+   ..     
+   .. 
+   ..     
+   .. 
+   ..     
+   .. 
+   ..     
+   .. 
+   ..     
+   .. 
+   ..     
+   .. 
+   ..     
+   .. 
+   ..     
+   .. 
+   ..     
+   .. 
+   ..     
+   .. 
+   ..     
+   .. 
+   ..     
+   .. 
+   ..     
+   .. 
+   ..     
+   .. 
+   ..     
+   .. 
+   ..     
+   .. 
+   ..     
+   .. 
+   ..     
+   .. 
+   ..     
+   .. 
+   ..     
+   .. 
+   ..     
+   .. 
+   ..     
+   .. 
+   ..     
+   .. 
+   ..     
+   .. 
    
    
 

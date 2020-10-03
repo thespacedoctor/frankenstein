@@ -7,7 +7,6 @@ Modules
    :nosignatures:
 
    frankenstein.commonutils 
-   frankenstein.docstring_test
    frankenstein.utKit 
 
 
@@ -18,14 +17,6 @@ Classes
    :toctree: _autosummary
    :nosignatures:
 
+   frankenstein.electric
    frankenstein.utKit.utKit 
 
-
-Functions
----------
-
-.. autosummary::
-   :toctree: _autosummary
-   :nosignatures:
-
-   frankenstein.docstring_test.docsting_test 

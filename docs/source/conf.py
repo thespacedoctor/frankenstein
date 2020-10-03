@@ -14,7 +14,6 @@ import codecs
 extensions = ['sphinx.ext.autodoc', 'sphinx.ext.todo',
               'sphinx.ext.mathjax', 'sphinx.ext.autosummary', 'sphinx.ext.coverage', 'sphinx.ext.linkcode', 'sphinxcontrib.mermaid', 'sphinx_search.extension']
 
-
 class Mock(MagicMock):
     """AVOID INSTALLING THESE C-DEPENDENT PACKAGES"""
     @classmethod
@@ -24,16 +23,13 @@ MOCK_MODULES = ['numpy', 'scipy', 'matplotlib', 'matplotlib.colors',
                 'matplotlib.pyplot', 'matplotlib.cm', 'matplotlib.path', 'matplotlib.patches', 'matplotlib.projections', 'matplotlib.projections.geo', 'healpy', 'astropy', 'astropy.io', 'pylibmc', 'HMpTy', 'HMpTy.mysql', 'ligo', 'ligo.gracedb', 'ligo.gracedb.rest', 'pandas']
 sys.modules.update((mod_name, Mock()) for mod_name in MOCK_MODULES)
 
-
 # WHERE DOES THIS conf.py FILE LIVE?
 moduleDirectory = os.path.dirname(os.path.realpath(__file__))
 # GET PACKAGE __version__ INTO locals()
 exec(open(moduleDirectory + "/../../frankenstein/__version__.py").read())
 
-
 sys.path.insert(0, os.path.abspath(
     '../../frankenstein/frankenstein'))
-
 
 autosummary_generate = True
 autosummary_imported_members = True
@@ -82,7 +78,6 @@ rst_epilog = u"""
 .. |tsd| replace:: thespacedoctor
 """ % locals()
 link_resolver_url = "https://github.com/thespacedoctor/frankenstein/tree/master"
-
 
 # General information about the project.
 now = datetime.now()
@@ -145,7 +140,6 @@ markdown_parser_config = {
     },
 }
 
-
 def updateUsageMd():
     """
     *Grab the usage from cl_utils.py to display in README.md*
@@ -173,7 +167,6 @@ def updateUsageMd():
     writeFile.close()
 
     return None
-
 
 def generateAutosummaryIndex():
 
@@ -332,7 +325,6 @@ Functions
 
     return thisText
 
-
 def findAllSubpackges(
     pathToPackage
 ):
@@ -347,7 +339,6 @@ def findAllSubpackges(
             subPackages.append(modname)
 
     return subPackages
-
 
 def linkcode_resolve(domain, info):
     if domain != 'py':
@@ -366,7 +357,6 @@ def linkcode_resolve(domain, info):
         filename += ("/").join(info['fullname'].split(
             ".")[0:-1]) + ".py" + "#" + info['fullname'].split(".")[-1]
     return link_resolver_url + "/" + filename
-
 
 def docstring(app, what, name, obj, options, lines):
 
@@ -425,7 +415,6 @@ def docstring(app, what, name, obj, options, lines):
     lines.clear()
     for line in rst.split("\n"):
         lines.append(line)
-
 
 def setup(app):
     app.connect('autodoc-process-docstring', docstring)

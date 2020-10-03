@@ -5,12 +5,12 @@
 
 :Author:
     David Young
-
-:Date Created:
-    May 21, 2015
 """
 from __future__ import print_function
-################# GLOBAL IMPORTS ####################
+from builtins import zip
+from builtins import input
+from builtins import str
+from builtins import object
 import sys
 import os
 os.environ['TERM'] = 'vt100'
@@ -25,18 +25,18 @@ from docopt import docopt
 from fundamentals import tools, times
 from fundamentals.files import recursive_directory_listing
 
-
-class electric():
-
+class electric(object):
     """
     *The worker class for the electric module*
 
-    **Key Arguments:**
-        - ``log`` -- logger
-        - ``settings`` -- the settings dictionary
-        - ``pathToTemplate`` -- path to the template folder/file
-        - ``pathToDestination`` -- path to where template should be cloned
-        - ``ignoreExisting`` - - ignore existing files in the destination for the template
+    **Key Arguments**
+
+    - ``log`` -- logger
+    - ``settings`` -- the settings dictionary
+    - ``pathToTemplate`` -- path to the template folder/file
+    - ``pathToDestination`` -- path to where template should be cloned
+    - ``ignoreExisting`` - - ignore existing files in the destination for the template
+    
     """
     # Initialisation
 
@@ -198,7 +198,7 @@ class electric():
             "now-year": now.strftime("%Y")
         }
 
-        for k, v in self.phDict.items():
+        for k, v in list(self.phDict.items()):
             if k in list(dynamicPhs.keys()):
                 self.phDict[k] = dynamicPhs[k]
 
@@ -214,8 +214,8 @@ class electric():
         self.log.debug(
             'completed the ````_fill_placeholders_from_settings`` method')
 
-        for k, v in self.phDict.items():
-            if k in self.settings["frankenstein"]["fixed placeholders"].keys():
+        for k, v in list(self.phDict.items()):
+            if k in list(self.settings["frankenstein"]["fixed placeholders"].keys()):
                 self.phDict[k] = self.settings[
                     "frankenstein"]["fixed placeholders"][k]
 
@@ -232,7 +232,7 @@ class electric():
             'completed the ````_request_remaining_placeholders`` method')
 
         phNeeded = False
-        for k, v in self.phDict.items():
+        for k, v in list(self.phDict.items()):
             if not v:
                 phNeeded = True
 
@@ -241,9 +241,9 @@ class electric():
 
         print("please add your placeholder values ...")
 
-        for k, v in self.phDict.items():
+        for k, v in list(self.phDict.items()):
             if not v:
-                v = raw_input("%(k)s? > " % locals())
+                v = input("%(k)s? > " % locals())
                 self.phDict[k] = v
 
         self.log.debug(
@@ -259,7 +259,7 @@ class electric():
             'completed the ````_list_remaining_placeholders`` method')
 
         remainingPlaceholders = []
-        for k, v in self.phDict.items():
+        for k, v in list(self.phDict.items()):
             if not v:
                 remainingPlaceholders.append(k)
 
@@ -300,7 +300,7 @@ class electric():
                     raise IOError(message)
 
                 newContent = thisData
-                for k, v in self.phDict.items():
+                for k, v in list(self.phDict.items()):
                     for ph in phs:
                         fullPH = ph + k + ph
                         if fullPH in thisData:
@@ -317,7 +317,7 @@ class electric():
             if os.path.isfile(i):
                 newPath = i
                 newFile = i.split("/")[-1]
-                for k, v in self.phDict.items():
+                for k, v in list(self.phDict.items()):
                     for ph in phs:
                         fullPH = ph + k + ph
                         if fullPH in newFile:
@@ -342,7 +342,7 @@ class electric():
         for i in theseDirs:
             newPath = i
             newFolder = i.split("/")[-1]
-            for k, v in self.phDict.items():
+            for k, v in list(self.phDict.items()):
                 for ph in phs:
                     fullPH = ph + k + ph
                     if fullPH in newFolder:
@@ -369,11 +369,15 @@ class electric():
         """
         *move template to destination*
 
-        **Key Arguments:**
-            # -
+        **Key Arguments**
 
-        **Return:**
-            - None
+        # -
+        
+
+        **Return**
+
+        - None
+        
 
         .. todo::
 
