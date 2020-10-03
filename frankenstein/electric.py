@@ -5,11 +5,12 @@
 
 :Author:
     David Young
-
-:Date Created:
-    May 21, 2015
 """
-################# GLOBAL IMPORTS ####################
+from __future__ import print_function
+from builtins import zip
+from builtins import input
+from builtins import str
+from builtins import object
 import sys
 import os
 os.environ['TERM'] = 'vt100'
@@ -24,18 +25,18 @@ from docopt import docopt
 from fundamentals import tools, times
 from fundamentals.files import recursive_directory_listing
 
-
-class electric():
-
+class electric(object):
     """
     *The worker class for the electric module*
 
-    **Key Arguments:**
-        - ``log`` -- logger
-        - ``settings`` -- the settings dictionary
-        - ``pathToTemplate`` -- path to the template folder/file
-        - ``pathToDestination`` -- path to where template should be cloned
-        - ``ignoreExisting`` - - ignore existing files in the destination for the template
+    **Key Arguments**
+
+    - ``log`` -- logger
+    - ``settings`` -- the settings dictionary
+    - ``pathToTemplate`` -- path to the template folder/file
+    - ``pathToDestination`` -- path to where template should be cloned
+    - ``ignoreExisting`` - - ignore existing files in the destination for the template
+    
     """
     # Initialisation
 
@@ -54,15 +55,16 @@ class electric():
         self.pathToDestination = pathToDestination
         self.ignoreExisting = ignoreExisting
         # xt-self-arg-tmpx
+        if self.pathToTemplate[-1] == "/":
+            self.pathToTemplate = self.pathToTemplate[:-1]
 
         return None
 
-    # Method Attributes
     def get(self):
         """
         *do the frankenstein magic!*
         """
-        self.log.info('starting the ``get`` method')
+        self.log.debug('starting the ``get`` method')
 
         self._copy_folder_and_get_directory_listings()
         self._join_all_filenames_and_text()
@@ -73,16 +75,32 @@ class electric():
         self._populate_placeholders_in_files()
         self._move_template_to_destination(ignoreExisting=self.ignoreExisting)
 
-        self.log.info('completed the ``get`` method')
+        self.log.debug('completed the ``get`` method')
         return None
+
+    def list_placeholders(self):
+        """
+        *list the remaining placeholders required by frankenstein*
+        """
+        self.log.debug('starting the ``list_placeholders`` method')
+
+        self._copy_folder_and_get_directory_listings()
+        self._join_all_filenames_and_text()
+        self._collect_placeholders_required()
+        self._populate_dynamic_placeholders()
+        self._fill_placeholders_from_settings()
+        placeholders = self._list_remaining_placeholders()
+
+        self.log.debug('completed the ``list_placeholders`` method')
+        return placeholders
 
     def _copy_folder_and_get_directory_listings(
             self):
         """
         *copy template folder to /tmp and get directory listings*
         """
-        self.log.info(
-            'starting the ``_copy_folder_and_get_directory_listings`` method')
+        self.log.debug(
+            'completed the ````_copy_folder_and_get_directory_listings`` method')
 
         # COPY TEMPLATE STRUCTURE TO /tmp/
         basename = os.path.basename(self.pathToTemplate)
@@ -102,7 +120,7 @@ class electric():
         self.directoryContents = directoryContents
         self.tmpPath = tmpPath
 
-        self.log.info(
+        self.log.debug(
             'completed the ``_copy_folder_and_get_directory_listings`` method')
         return None
 
@@ -111,7 +129,8 @@ class electric():
         """
         *collect placeholders required from filename etc*
         """
-        self.log.info('starting the ``_collect_placeholders_required`` method')
+        self.log.debug(
+            'starting the ``_collect_placeholders_required`` method')
 
         phs = self.settings["frankenstein"]["placeholder delimiters"]
         phsString = "|".join(phs)
@@ -124,11 +143,12 @@ class electric():
 
         phDict = {}
         for match in matchObject:
-            phDict[match.group(2)] = None
+            if len(match.group(2).strip()) > 0:
+                phDict[match.group(2)] = None
 
         self.phDict = phDict
 
-        self.log.info(
+        self.log.debug(
             'completed the ``_collect_placeholders_required`` method')
         return None
 
@@ -137,7 +157,7 @@ class electric():
         """
         *join all file names, driectory names and text content together*
         """
-        self.log.info('starting the ``_join_all_filenames_and_text`` method')
+        self.log.debug('starting the ``_join_all_filenames_and_text`` method')
 
         contentString = u""
         for i in self.directoryContents:
@@ -154,7 +174,7 @@ class electric():
 
         self.contentString = contentString
 
-        self.log.info('completed the ``_join_all_filenames_and_text`` method')
+        self.log.debug('completed the ``_join_all_filenames_and_text`` method')
         return None
 
     def _populate_dynamic_placeholders(
@@ -162,7 +182,8 @@ class electric():
         """
         *populate dynamic placeholders - times etc*
         """
-        self.log.info('starting the ``_populate_dynamic_placeholders`` method')
+        self.log.debug(
+            'starting the ``_populate_dynamic_placeholders`` method')
 
         from datetime import datetime, date, time
         now = datetime.now()
@@ -177,11 +198,11 @@ class electric():
             "now-year": now.strftime("%Y")
         }
 
-        for k, v in self.phDict.iteritems():
-            if k in dynamicPhs.keys():
+        for k, v in list(self.phDict.items()):
+            if k in list(dynamicPhs.keys()):
                 self.phDict[k] = dynamicPhs[k]
 
-        self.log.info(
+        self.log.debug(
             'completed the ``_populate_dynamic_placeholders`` method')
         return None
 
@@ -190,15 +211,15 @@ class electric():
         """
         *fill placeholders from the placeholders in the settings file*
         """
-        self.log.info(
-            'starting the ``_fill_placeholders_from_settings`` method')
+        self.log.debug(
+            'completed the ````_fill_placeholders_from_settings`` method')
 
-        for k, v in self.phDict.iteritems():
-            if k in self.settings["frankenstein"]["fixed placeholders"].keys():
+        for k, v in list(self.phDict.items()):
+            if k in list(self.settings["frankenstein"]["fixed placeholders"].keys()):
                 self.phDict[k] = self.settings[
                     "frankenstein"]["fixed placeholders"][k]
 
-        self.log.info(
+        self.log.debug(
             'completed the ``_fill_placeholders_from_settings`` method')
         return None
 
@@ -207,35 +228,52 @@ class electric():
         """
         *request remaining placeholders needing populated from the user*
         """
-        self.log.info(
-            'starting the ``_request_remaining_placeholders`` method')
+        self.log.debug(
+            'completed the ````_request_remaining_placeholders`` method')
 
         phNeeded = False
-        for k, v in self.phDict.iteritems():
+        for k, v in list(self.phDict.items()):
             if not v:
                 phNeeded = True
 
         if phNeeded == False:
             return
 
-        print "please add your placeholder values ..."
+        print("please add your placeholder values ...")
 
-        for k, v in self.phDict.iteritems():
+        for k, v in list(self.phDict.items()):
             if not v:
-                v = raw_input("%(k)s? \n  >  " % locals())
+                v = input("%(k)s? > " % locals())
                 self.phDict[k] = v
 
-        self.log.info(
+        self.log.debug(
             'completed the ``_request_remaining_placeholders`` method')
         return None
+
+    def _list_remaining_placeholders(
+            self):
+        """
+        *list the remaining placeholders needing populated from the user*
+        """
+        self.log.debug(
+            'completed the ````_list_remaining_placeholders`` method')
+
+        remainingPlaceholders = []
+        for k, v in list(self.phDict.items()):
+            if not v:
+                remainingPlaceholders.append(k)
+
+        self.log.debug(
+            'completed the ``_list_remaining_placeholders`` method')
+        return remainingPlaceholders
 
     def _populate_placeholders_in_files(
             self):
         """
         *populate placeholders in file names, folder names and content*
         """
-        self.log.info(
-            'starting the ``_populate_placeholders_in_files`` method')
+        self.log.debug(
+            'completed the ````_populate_placeholders_in_files`` method')
 
         rev = reversed(self.directoryContents)
         phs = self.settings["frankenstein"]["placeholder delimiters"]
@@ -256,13 +294,13 @@ class electric():
                         pathToReadFile, encoding='ISO-8859-1', mode='r')
                     thisData = readFile.read()
                     readFile.close()
-                except IOError, e:
+                except IOError as e:
                     message = 'could not open the file %s' % (pathToReadFile,)
                     self.log.critical(message)
                     raise IOError(message)
 
                 newContent = thisData
-                for k, v in self.phDict.iteritems():
+                for k, v in list(self.phDict.items()):
                     for ph in phs:
                         fullPH = ph + k + ph
                         if fullPH in thisData:
@@ -279,7 +317,7 @@ class electric():
             if os.path.isfile(i):
                 newPath = i
                 newFile = i.split("/")[-1]
-                for k, v in self.phDict.iteritems():
+                for k, v in list(self.phDict.items()):
                     for ph in phs:
                         fullPH = ph + k + ph
                         if fullPH in newFile:
@@ -291,7 +329,7 @@ class electric():
                         self.log.debug("attempting to rename file %s to %s" %
                                        (i, newPath))
                         shutil.move(i, newPath)
-                    except Exception, e:
+                    except Exception as e:
                         self.log.error(
                             "could not rename file %s to %s - failed with this error: %s " % (i, newPath, str(e),))
                         sys.exit(0)
@@ -304,7 +342,7 @@ class electric():
         for i in theseDirs:
             newPath = i
             newFolder = i.split("/")[-1]
-            for k, v in self.phDict.iteritems():
+            for k, v in list(self.phDict.items()):
                 for ph in phs:
                     fullPH = ph + k + ph
                     if fullPH in newFolder:
@@ -315,12 +353,12 @@ class electric():
                     self.log.debug("attempting to rename file %s to %s" %
                                    (i, newPath))
                     shutil.move(i, newPath)
-                except Exception, e:
+                except Exception as e:
                     self.log.error(
                         "could not rename file %s to %s - failed with this error: %s " % (i, newPath, str(e),))
                     sys.exit(0)
 
-        self.log.info(
+        self.log.debug(
             'completed the ``_populate_placeholders_in_files`` method')
         return None
 
@@ -331,18 +369,22 @@ class electric():
         """
         *move template to destination*
 
-        **Key Arguments:**
-            # -
+        **Key Arguments**
 
-        **Return:**
-            - None
+        # -
+        
+
+        **Return**
+
+        - None
+        
 
         .. todo::
 
             - @review: when complete, clean _move_template_to_destination method
             - @review: when complete add logging
         """
-        self.log.info('starting the ``_move_template_to_destination`` method')
+        self.log.debug('starting the ``_move_template_to_destination`` method')
 
         # CREATE DIRECTORY STRUCTURE
         sourceDirectories = recursive_directory_listing(
@@ -400,7 +442,7 @@ class electric():
                         shutil.move(s, f)
                     else:
                         pass
-                except Exception, e:
+                except Exception as e:
                     self.log.error("could not rename file %s to %s - failed with this error: %s " %
                                    (s, f, str(e),))
                     sys.exit(0)
@@ -427,7 +469,8 @@ class electric():
         # REMOVE THE TMP FOLDER
         shutil.rmtree(self.tmpPath)
 
-        self.log.info('completed the ``_move_template_to_destination`` method')
+        self.log.debug(
+            'completed the ``_move_template_to_destination`` method')
         return None
 
     # use the tab-trigger below for new method

@@ -1,7 +1,31 @@
-frankenstein.commonutils (*subpackage*)
-========================
+﻿commonutils *(module)*
+===================================
+
 
 
 .. automodule:: frankenstein.commonutils
-    :members:
 
+
+    
+    
+
+    
+
+
+    
+
+    
+
+        
+
+
+
+    
+
+
+    
+        
+
+
+    
+    

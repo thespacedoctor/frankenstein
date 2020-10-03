@@ -1,8 +1,13 @@
+
+test-reports
+
+reports
 .metadata
 *~
 *.sublime-project
 *.sublime-workspace
 .DS_Store
+**/tests/output/*
 .svn
 _git*
 *.orig
@@ -32,3 +37,5 @@ test_database.sql
 /logs/log.html
 
 path_to_settings.yaml
+blog-post.md
+blog-post.rst

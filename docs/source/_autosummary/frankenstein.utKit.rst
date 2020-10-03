@@ -1,7 +1,38 @@
-frankenstein.utKit (*module*)
-==================
+﻿utKit *(module)*
+=============================
+
 
 
 .. automodule:: frankenstein.utKit
-    :members:
 
+
+    
+    
+
+    
+
+
+    
+
+    
+    .. rubric:: Classes
+
+    .. autosummary::
+
+        
+          ~utKit
+        
+
+        
+
+
+
+    
+
+
+    
+        
+
+
+    
+    
