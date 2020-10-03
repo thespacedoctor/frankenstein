@@ -9,7 +9,6 @@
 :Date Created:
     May 21, 2015
 """
-from __future__ import print_function
 ################# GLOBAL IMPORTS ####################
 import sys
 import os
@@ -198,8 +197,8 @@ class electric():
             "now-year": now.strftime("%Y")
         }
 
-        for k, v in self.phDict.items():
-            if k in list(dynamicPhs.keys()):
+        for k, v in self.phDict.iteritems():
+            if k in dynamicPhs.keys():
                 self.phDict[k] = dynamicPhs[k]
 
         self.log.debug(
@@ -214,7 +213,7 @@ class electric():
         self.log.debug(
             'completed the ````_fill_placeholders_from_settings`` method')
 
-        for k, v in self.phDict.items():
+        for k, v in self.phDict.iteritems():
             if k in self.settings["frankenstein"]["fixed placeholders"].keys():
                 self.phDict[k] = self.settings[
                     "frankenstein"]["fixed placeholders"][k]
@@ -232,16 +231,16 @@ class electric():
             'completed the ````_request_remaining_placeholders`` method')
 
         phNeeded = False
-        for k, v in self.phDict.items():
+        for k, v in self.phDict.iteritems():
             if not v:
                 phNeeded = True
 
         if phNeeded == False:
             return
 
-        print("please add your placeholder values ...")
+        print "please add your placeholder values ..."
 
-        for k, v in self.phDict.items():
+        for k, v in self.phDict.iteritems():
             if not v:
                 v = raw_input("%(k)s? > " % locals())
                 self.phDict[k] = v
@@ -259,7 +258,7 @@ class electric():
             'completed the ````_list_remaining_placeholders`` method')
 
         remainingPlaceholders = []
-        for k, v in self.phDict.items():
+        for k, v in self.phDict.iteritems():
             if not v:
                 remainingPlaceholders.append(k)
 
@@ -294,13 +293,13 @@ class electric():
                         pathToReadFile, encoding='ISO-8859-1', mode='r')
                     thisData = readFile.read()
                     readFile.close()
-                except IOError as e:
+                except IOError, e:
                     message = 'could not open the file %s' % (pathToReadFile,)
                     self.log.critical(message)
                     raise IOError(message)
 
                 newContent = thisData
-                for k, v in self.phDict.items():
+                for k, v in self.phDict.iteritems():
                     for ph in phs:
                         fullPH = ph + k + ph
                         if fullPH in thisData:
@@ -317,7 +316,7 @@ class electric():
             if os.path.isfile(i):
                 newPath = i
                 newFile = i.split("/")[-1]
-                for k, v in self.phDict.items():
+                for k, v in self.phDict.iteritems():
                     for ph in phs:
                         fullPH = ph + k + ph
                         if fullPH in newFile:
@@ -329,7 +328,7 @@ class electric():
                         self.log.debug("attempting to rename file %s to %s" %
                                        (i, newPath))
                         shutil.move(i, newPath)
-                    except Exception as e:
+                    except Exception, e:
                         self.log.error(
                             "could not rename file %s to %s - failed with this error: %s " % (i, newPath, str(e),))
                         sys.exit(0)
@@ -342,7 +341,7 @@ class electric():
         for i in theseDirs:
             newPath = i
             newFolder = i.split("/")[-1]
-            for k, v in self.phDict.items():
+            for k, v in self.phDict.iteritems():
                 for ph in phs:
                     fullPH = ph + k + ph
                     if fullPH in newFolder:
@@ -353,7 +352,7 @@ class electric():
                     self.log.debug("attempting to rename file %s to %s" %
                                    (i, newPath))
                     shutil.move(i, newPath)
-                except Exception as e:
+                except Exception, e:
                     self.log.error(
                         "could not rename file %s to %s - failed with this error: %s " % (i, newPath, str(e),))
                     sys.exit(0)
@@ -438,7 +437,7 @@ class electric():
                         shutil.move(s, f)
                     else:
                         pass
-                except Exception as e:
+                except Exception, e:
                     self.log.error("could not rename file %s to %s - failed with this error: %s " %
                                    (s, f, str(e),))
                     sys.exit(0)

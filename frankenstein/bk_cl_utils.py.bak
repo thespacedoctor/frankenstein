@@ -18,7 +18,6 @@ Options:
     -h, --help            show this help message
     -s, --settings        the settings file
 """
-from __future__ import print_function
 ################# GLOBAL IMPORTS ####################
 import sys
 import os
@@ -48,12 +47,12 @@ def main(arguments=None):
 
     # unpack remaining cl arguments using `exec` to setup the variable names
     # automatically
-    for arg, val in arguments.items():
+    for arg, val in arguments.iteritems():
         if arg[0] == "-":
             varname = arg.replace("-", "") + "Flag"
         else:
             varname = arg.replace("<", "").replace(">", "")
-        if isinstance(val, ("".__class__, u"".__class__)) :
+        if isinstance(val, str) or isinstance(val, unicode):
             exec(varname + " = '%s'" % (val,))
         else:
             exec(varname + " = %s" % (val,))
@@ -84,7 +83,7 @@ def main(arguments=None):
             settings=settings
         ).list_placeholders()
         placeHolders = ("\n").join(placeHolders)
-        print(placeHolders)
+        print placeHolders
 
     if "dbConn" in locals() and dbConn:
         dbConn.commit()
