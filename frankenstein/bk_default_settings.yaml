@@ -1,5 +1,3 @@
-version: 1
-
 # These are the settings for frankenstein cl-util
 # Frankenstein - bring project templates to life
 frankenstein:
@@ -11,6 +9,7 @@ frankenstein:
         authorEmail: davidrobertyoung@gmail.com
         authorWebsite: http://www.thespacedoctor.co.uk
 
+# Change these settings if you want to turn debugging on/off
 logging settings:
     formatters:
         file_style:
@@ -32,7 +31,7 @@ logging settings:
             class: logging.handlers.GroupWriteRotatingFileHandler
             level: WARNING
             formatter: file_style
-            filename: ~/.config/frankenstein/frankenstein.log
+            filename: logger.log
             mode: w+
             maxBytes: 102400
             backupCount: 1

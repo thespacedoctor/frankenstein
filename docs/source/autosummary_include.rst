@@ -1,31 +1,23 @@
 
-Modules
--------
+**Modules**
 
 .. autosummary::
-   :toctree: _autosummary
    :nosignatures:
 
    frankenstein.commonutils 
    frankenstein.docstring_test
-   frankenstein.utKit 
+   frankenstein.utKit
 
-
-Classes
--------
+**Classes**
 
 .. autosummary::
-   :toctree: _autosummary
    :nosignatures:
 
    frankenstein.utKit.utKit 
 
-
-Functions
----------
+**Functions**
 
 .. autosummary::
-   :toctree: _autosummary
    :nosignatures:
 
    frankenstein.docstring_test.docsting_test 

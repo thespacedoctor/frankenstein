@@ -10,6 +10,12 @@ frankenstein:
         authorName: David Young
         authorEmail: davidrobertyoung@gmail.com
         authorWebsite: http://www.thespacedoctor.co.uk
+        pythonmodulename: mymodule
+        projectName: myproject
+        textTitle: title_name
+        deepestcolor: red
+        python_variable: myVar
+        shallowcolor: red
 
 logging settings:
     formatters:

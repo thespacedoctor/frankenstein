@@ -1,24 +1,23 @@
-#!/usr/local/bin/python
+#!/usr/bin/env python
 # encoding: utf-8
 """
-*CL utils for frankenstein*
-
-:Author:
-    David Young
-
-:Date Created:
-    October 1, 2015
+Documentation for frankenstein can be found here: http://frankenstein.readthedocs.org
 
 Usage:
+    frankenstein init
     frankenstein <pathToTemplate> <pathToDestination> [-s <pathToSettingsFile>]
     frankenstein -l <pathToTemplate> [-s <pathToSettingsFile>]
 
 Options:
-    -l, --list            list the remaining placeholders required by the template after dynamic and settings file placeholders
-    -h, --help            show this help message
-    -s, --settings        the settings file
+    init                                   setup the frankenstein settings file for the first time
+    <pathToTemplate>                       path the to folder hosting the template files/folders
+    <pathToDestination>                    path the to directory to write customised template files/folders to
+
+    -l, --list                             list the remaining placeholders required by the template after dynamic and settings file placeholders
+    -h, --help                             show this help message
+    -v, --version                          show version
+    -s, --settings <pathToSettingsFile>    the settings file
 """
-################# GLOBAL IMPORTS ####################
 import sys
 import os
 os.environ['TERM'] = 'vt100'
@@ -27,38 +26,50 @@ import glob
 import pickle
 from docopt import docopt
 from fundamentals import tools, times
-from frankenstein import electric
-# from ..__init__ import *
+from subprocess import Popen, PIPE, STDOUT
+
+
+def tab_complete(text, state):
+    return (glob.glob(text + '*') + [None])[state]
 
 
 def main(arguments=None):
     """
-    *The main function used when ``cl_utils.py`` is run as a single script from the cl, or when installed as a cl command*
+    *The main function used when `cl_utils.py` is run as a single script from the cl, or when installed as a cl command*
     """
     # setup the command-line util settings
     su = tools(
         arguments=arguments,
         docString=__doc__,
-        logLevel="DEBUG",
+        logLevel="WARNING",
         options_first=False,
-        projectName="frankenstein"
+        projectName="frankenstein",
+        defaultSettingsFile=True
     )
     arguments, settings, log, dbConn = su.setup()
 
-    # unpack remaining cl arguments using `exec` to setup the variable names
-    # automatically
-    for arg, val in arguments.iteritems():
+    # tab completion for raw_input
+    readline.set_completer_delims(' \t\n;')
+    readline.parse_and_bind("tab: complete")
+    readline.set_completer(tab_complete)
+
+    # UNPACK REMAINING CL ARGUMENTS USING `EXEC` TO SETUP THE VARIABLE NAMES
+    # AUTOMATICALLY
+    a = {}
+    for arg, val in list(arguments.items()):
         if arg[0] == "-":
             varname = arg.replace("-", "") + "Flag"
         else:
             varname = arg.replace("<", "").replace(">", "")
-        if isinstance(val, str) or isinstance(val, unicode):
-            exec(varname + " = '%s'" % (val,))
-        else:
-            exec(varname + " = %s" % (val,))
+        a[varname] = val
         if arg == "--dbConn":
             dbConn = val
+            a["dbConn"] = val
         log.debug('%s = %s' % (varname, val,))
+
+    listFlag = a["listFlag"]
+    pathToTemplate = a["pathToTemplate"]
+    pathToDestination = a["pathToDestination"]
 
     ## START LOGGING ##
     startTime = times.get_now_sql_datetime()
@@ -66,8 +77,51 @@ def main(arguments=None):
         '--- STARTING TO RUN THE cl_utils.py AT %s' %
         (startTime,))
 
-    # call the worker function
-    # x-if-settings-or-database-credientials
+    # set options interactively if user requests
+    if "interactiveFlag" in a and a["interactiveFlag"]:
+
+        # load previous settings
+        moduleDirectory = os.path.dirname(__file__) + "/resources"
+        pathToPickleFile = "%(moduleDirectory)s/previousSettings.p" % locals()
+        try:
+            with open(pathToPickleFile):
+                pass
+            previousSettingsExist = True
+        except:
+            previousSettingsExist = False
+        previousSettings = {}
+        if previousSettingsExist:
+            previousSettings = pickle.load(open(pathToPickleFile, "rb"))
+
+        # x-raw-input
+        # x-boolean-raw-input
+        # x-raw-input-with-default-value-from-previous-settings
+
+        # save the most recently used requests
+        pickleMeObjects = []
+        pickleMe = {}
+        theseLocals = locals()
+        for k in pickleMeObjects:
+            pickleMe[k] = theseLocals[k]
+        pickle.dump(pickleMe, open(pathToPickleFile, "wb"))
+
+    if a["init"]:
+        from os.path import expanduser
+        home = expanduser("~")
+        filepath = home + "/.config/frankenstein/frankenstein.yaml"
+        try:
+            cmd = """open %(filepath)s""" % locals()
+            p = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
+        except:
+            pass
+        try:
+            cmd = """start %(filepath)s""" % locals()
+            p = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
+        except:
+            pass
+        return
+
+    # CALL FUNCTIONS/OBJECTS
     if not listFlag:
         electric.electric(
             log=log,
@@ -96,25 +150,6 @@ def main(arguments=None):
 
     return
 
-
-###################################################################
-# CLASSES                                                         #
-###################################################################
-# xt-class-module-worker-tmpx
-# xt-class-tmpx
-
-
-###################################################################
-# PUBLIC FUNCTIONS                                                #
-###################################################################
-# xt-worker-def
-
-# use the tab-trigger below for new function
-# xt-def-with-logger
-
-###################################################################
-# PRIVATE (HELPER) FUNCTIONS                                      #
-###################################################################
 
 if __name__ == '__main__':
     main()
