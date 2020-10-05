@@ -27,10 +27,13 @@ import glob
 import pickle
 from docopt import docopt
 from fundamentals import tools, times
+from frankenstein import electric
 from subprocess import Popen, PIPE, STDOUT
+
 
 def tab_complete(text, state):
     return (glob.glob(text + '*') + [None])[state]
+
 
 def main(arguments=None):
     """
