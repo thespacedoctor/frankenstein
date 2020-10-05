@@ -25,6 +25,7 @@ from docopt import docopt
 from fundamentals import tools, times
 from fundamentals.files import recursive_directory_listing
 
+
 class electric(object):
     """
     *The worker class for the electric module*
@@ -36,7 +37,7 @@ class electric(object):
     - ``pathToTemplate`` -- path to the template folder/file
     - ``pathToDestination`` -- path to where template should be cloned
     - ``ignoreExisting`` - - ignore existing files in the destination for the template
-    
+
     """
     # Initialisation
 
@@ -372,12 +373,12 @@ class electric(object):
         **Key Arguments**
 
         # -
-        
+
 
         **Return**
 
         - None
-        
+
 
         .. todo::
 
