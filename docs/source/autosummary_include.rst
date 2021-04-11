@@ -12,8 +12,7 @@
 .. autosummary::
    :nosignatures:
 
-   frankenstein.electric
- 
+   frankenstein.electric 
 
 **Functions**
 

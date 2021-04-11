@@ -14,6 +14,7 @@ import codecs
 extensions = ['sphinx.ext.autodoc', 'sphinx.ext.todo',
               'sphinx.ext.mathjax', 'sphinx.ext.autosummary', 'sphinx.ext.coverage', 'sphinx.ext.linkcode', 'sphinxcontrib.mermaid', 'sphinx_search.extension']
 
+
 class Mock(MagicMock):
     """AVOID INSTALLING THESE C-DEPENDENT PACKAGES"""
     @classmethod
@@ -140,6 +141,7 @@ markdown_parser_config = {
     },
 }
 
+
 def updateUsageMd():
     """
     *Grab the usage from cl_utils.py to display in README.md*
@@ -167,6 +169,7 @@ def updateUsageMd():
     writeFile.close()
 
     return None
+
 
 def generateAutosummaryIndex():
 
@@ -218,8 +221,22 @@ def generateAutosummaryIndex():
                 # if thisMod not in allSubpackages and len(name) and name[0:2] != "__" and name[-5:] != "tests" and name != "cl_utils" and name != "utKit":
                 #     allModules.append(sp + "." + name)
 
+    moreModules = []
     for spm in allSubpackages + allModules:
         for name, obj in inspect.getmembers(__import__(spm, fromlist=[''])):
+            if name[:2] == "__" or allSubpackages[0] not in name:
+                continue
+            try:
+                moreModules.append(obj.__module__)
+            except:
+                pass
+
+    for spm in allSubpackages + allModules + moreModules:
+        for name, obj in inspect.getmembers(__import__(spm, globals(), locals(), fromlist=[''], level=0)):
+            if name[:2] == "__":
+                continue
+            if spm.split(".")[-1] == name:
+                continue
             if inspect.isclass(obj):
                 thisClass = spm + "." + name
                 if (thisClass == obj.__module__ or spm == obj.__module__) and len(name) and name[0:1] != "_":
@@ -325,6 +342,7 @@ Functions
 
     return thisText
 
+
 def findAllSubpackges(
     pathToPackage
 ):
@@ -339,6 +357,7 @@ def findAllSubpackges(
             subPackages.append(modname)
 
     return subPackages
+
 
 def linkcode_resolve(domain, info):
     if domain != 'py':
@@ -357,6 +376,7 @@ def linkcode_resolve(domain, info):
         filename += ("/").join(info['fullname'].split(
             ".")[0:-1]) + ".py" + "#" + info['fullname'].split(".")[-1]
     return link_resolver_url + "/" + filename
+
 
 def docstring(app, what, name, obj, options, lines):
 
@@ -415,6 +435,7 @@ def docstring(app, what, name, obj, options, lines):
     lines.clear()
     for line in rst.split("\n"):
         lines.append(line)
+
 
 def setup(app):
     app.connect('autodoc-process-docstring', docstring)

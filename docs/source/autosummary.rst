@@ -17,6 +17,5 @@ Classes
    :toctree: _autosummary
    :nosignatures:
 
-   frankenstein.electric
-   frankenstein.utKit.utKit 
+   frankenstein.electric 
 

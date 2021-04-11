@@ -7,4 +7,3 @@ frankenstein.commonutils.getpackagepath module
    :show-inheritance:
    :inherited-members:
    :member-order:
-   :private-members:

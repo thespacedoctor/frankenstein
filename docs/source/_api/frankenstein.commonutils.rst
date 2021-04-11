@@ -7,12 +7,10 @@ frankenstein.commonutils package
    :show-inheritance:
    :inherited-members:
    :member-order:
-   :private-members:
 
 Submodules
 ----------
 
 .. toctree::
-   :maxdepth: 4
 
    frankenstein.commonutils.getpackagepath
