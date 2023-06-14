@@ -7,6 +7,16 @@
     David Young
 """
 from __future__ import print_function
+from fundamentals.files import recursive_directory_listing
+from fundamentals import tools, times
+from docopt import docopt
+from subprocess import Popen, PIPE, STDOUT
+import re
+import codecs
+import shutil
+import pickle
+import glob
+import readline
 from builtins import zip
 from builtins import input
 from builtins import str
@@ -14,16 +24,6 @@ from builtins import object
 import sys
 import os
 os.environ['TERM'] = 'vt100'
-import readline
-import glob
-import pickle
-import shutil
-import codecs
-import re
-from subprocess import Popen, PIPE, STDOUT
-from docopt import docopt
-from fundamentals import tools, times
-from fundamentals.files import recursive_directory_listing
 
 
 class electric(object):
@@ -159,11 +159,14 @@ class electric(object):
         *join all file names, driectory names and text content together*
         """
         self.log.debug('starting the ``_join_all_filenames_and_text`` method')
+        from binaryornot.check import is_binary
 
         contentString = u""
         for i in self.directoryContents:
             contentString += u"%(i)s\n" % locals()
             if os.path.isfile(os.path.join(i)):
+                if is_binary(i):
+                    continue
                 if i[-4:] in [".png", ".jpg", ".gif"]:
                     continue
                 readFile = codecs.open(i, encoding='ISO-8859-1', mode='r')
