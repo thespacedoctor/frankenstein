@@ -1,5 +1,9 @@
 # frankenstein
 
+[![](https://zenodo.org/badge/36016745.svg)](https://zenodo.org/badge/latestdoi/36016745) 
+
+
+
 <!-- INFO BADGES -->  
 
 [![](https://img.shields.io/pypi/pyversions/frankenstein)](https://pypi.org/project/frankenstein/)  
@@ -25,4 +29,17 @@ Documentation for frankenstein is hosted by [Read the Docs](https://frankenstein
 * 
 
 
+## How to cite frankenstein
 
+If you use `frankenstein` in your work, please cite using the following BibTeX entry: 
+
+```bibtex
+@software{Young_frankenstein,
+    author = {Young, David R.},
+    doi = {10.5281/zenodo.8037492},
+    license = {GPL-3.0-only},
+    title = {{frankenstein}},
+    url = {https://github.com/thespacedoctor/frankenstein}
+}
+```
+ 
