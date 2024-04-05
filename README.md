@@ -34,7 +34,7 @@ Documentation for frankenstein is hosted by [Read the Docs](https://frankenstein
 If you use `frankenstein` in your work, please cite using the following BibTeX entry: 
 
 ```bibtex
-@software{Young_frankenstein_Project_templates,
+@software{Young_frankenstein,
     author = {Young, David R.},
     doi = {10.5281/zenodo.8037491},
     license = {GPL-3.0-only},
