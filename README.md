@@ -1,6 +1,6 @@
 # frankenstein
 
-[![](https://zenodo.org/badge/36016745.svg)](https://zenodo.org/badge/latestdoi/36016745) 
+[![](https://zenodo.org/badge/DOI/10.5281/zenodo.8037491.svg)](https://zenodo.org/doi/10.5281/zenodo.8037491) 
 
 
 
@@ -34,12 +34,12 @@ Documentation for frankenstein is hosted by [Read the Docs](https://frankenstein
 If you use `frankenstein` in your work, please cite using the following BibTeX entry: 
 
 ```bibtex
-@software{Young_frankenstein,
+@software{Young_frankenstein_Project_templates,
     author = {Young, David R.},
-    doi = {10.5281/zenodo.8037492},
+    doi = {10.5281/zenodo.8037491},
     license = {GPL-3.0-only},
-    title = {{frankenstein}},
-    url = {https://github.com/thespacedoctor/frankenstein}
+    title = {{frankenstein. Project templates brought to life}},
+    url = {https://zenodo.org/doi/10.5281/zenodo.8037491}
 }
 ```
  
